@@ -1,12 +1,10 @@
-package com.daelim.database.dto
+package com.daelim.database.core.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
-data class User(
+@Table(name = "users")  // "user" 대신 "users" 사용을 권장
+data class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,

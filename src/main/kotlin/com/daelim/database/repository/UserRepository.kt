@@ -1,8 +1,10 @@
 package com.daelim.database.repository
 
-import com.daelim.database.dto.User
+import com.daelim.database.core.entity.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-interface UserRepository : JpaRepository<User, Long> {
-    fun findByUsername(username: String): User?
+@Repository
+interface UserRepository : JpaRepository<UserEntity, Long> {
+    fun findByUsername(username: String): UserEntity?
 }

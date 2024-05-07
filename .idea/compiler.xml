@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17">
+      <module name="database.database" target="17" />
       <module name="database.database.main" target="17" />
+      <module name="database.database.main~1" target="17" />
       <module name="database.database.test" target="17" />
+      <module name="database.database.test~1" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

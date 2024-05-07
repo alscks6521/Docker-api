@@ -1,6 +1,7 @@
 package com.daelim.database.service
 
-import com.daelim.database.dto.User
+import com.daelim.database.core.dto.UserDto
+import com.daelim.database.core.entity.UserEntity
 import com.daelim.database.repository.UserRepository
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.core.StringRedisTemplate
@@ -12,9 +13,14 @@ class UserService(
     private val userRepository: UserRepository,
     private val redisTemplate: StringRedisTemplate // Redis 템플릿 추가
 ) {
-    fun registerUser(username: String, password: String): User {
-        val user = User(username = username, password = password) // 비밀번호는 암호화 처리 필요
-        return userRepository.save(user)
+    fun registerUser(username: String, password: String): UserDto {
+        userRepository.findByUsername(username)?.let {
+            throw IllegalStateException("Username already exists")
+        }
+        val newUser = UserEntity(username = username, password = password)
+        return userRepository.save(newUser).let {
+            UserDto(username = it.username)
+        }
     }
 
     fun validateUser(username: String, password: String): Boolean {

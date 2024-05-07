@@ -1,6 +1,6 @@
 package com.daelim.database.controller
 
-import com.daelim.database.dto.User
+import com.daelim.database.core.dto.UserDto
 import com.daelim.database.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,7 +14,7 @@ class UserController(private val userService: UserService) {
     fun register(
         @RequestParam username: String,
         @RequestParam password: String
-    ): ResponseEntity<User> {
+    ): ResponseEntity<UserDto> {
         return ResponseEntity.ok(userService.registerUser(username, password))
     }
 
