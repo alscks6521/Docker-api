@@ -16,6 +16,10 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+// 라지 테스트 : API를 테스트하는 공간
+// 미디움 : 서비스
+// 스몰 : 단위 테스트
+
 @WebMvcTest(UserController::class)
 class UserControllerSpec @Autowired constructor(
     private val mockMvc: MockMvc
