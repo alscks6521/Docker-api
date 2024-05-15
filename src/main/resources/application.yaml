@@ -1,13 +1,7 @@
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/user?useSSL=false&serverTimezone=UTC
-    username: daelim
-    password: daelim
+  profiles:
+    active: local
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-  data:
-    redis:
-      host: localhost
-      port: 6379

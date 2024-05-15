@@ -18,15 +18,22 @@ class SwaggerConfig {
     @Value("\${swagger.description}")
     private val swaggerDescription: String? = null
 
-    @Bean
-    fun customOpenAPI(): OpenAPI {
-        return OpenAPI()
-            .info(Info().title("LOTTO API").version("v1.0"))
-            .servers(
-                listOf(
-                    Server().url(swaggerURL)
-                        .description(swaggerDescription),
-                )
-            )
-    }
+//    @Bean
+//    fun customOpenAPI(): OpenAPI {
+//        return OpenAPI()
+//            .info(Info().title("LOTTO API").version("v1.0"))
+//            .servers(
+//                listOf(
+//                    Server().url(swaggerURL)
+//                        .description(swaggerDescription),
+//                )
+//            )
+//    }
+@Bean
+fun api(): GroupedOpenApi {
+    return GroupedOpenApi.builder()
+        .group("user-api")
+        .pathsToMatch("/users/**")
+        .build()
+}
 }

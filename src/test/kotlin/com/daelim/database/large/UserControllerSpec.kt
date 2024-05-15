@@ -16,6 +16,11 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+
+// 라지 테스트 : API를 테스트하는 공간
+// 미디움 : 서비스
+// 스몰 : 단위 테스트
+
 @WebMvcTest(UserController::class)
 class UserControllerSpec @Autowired constructor(
     private val mockMvc: MockMvc
@@ -30,7 +35,7 @@ class UserControllerSpec @Autowired constructor(
     @BeforeEach
     fun setup() {
         val username = faker.internet().username()
-        val password = faker.internet().password()
+        val password = faker.internet().password(8, 16)
         randomUser = UserEntity(
             username = username,
             password = password
@@ -38,12 +43,10 @@ class UserControllerSpec @Autowired constructor(
     }
 
     @Test
-    @DisplayName("회원 가입 api")
-    fun `회원 가입 api`() {
+    @DisplayName("회원 가입 API - 성공")
+    fun `회원 가입 API - 성공`() {
         val user = randomUser
-        `when`(userService.registerUser(randomUser.username, randomUser.password)).thenReturn(
-            UserDto( username = user.username )
-        )
+        `when`(userService.registerUser(randomUser.username, randomUser.password)).thenReturn(user)
 
         mockMvc.perform(
             post("/register")
@@ -52,5 +55,36 @@ class UserControllerSpec @Autowired constructor(
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk)
             .andExpect(jsonPath("$.username").value(user.username))
+    }
+
+    @Test
+    @DisplayName("로그인 API - 성공")
+    fun `로그인 API - 성공`() {
+        val sessionId = "validSessionId"
+        `when`(userService.validateUser(randomUser.username, randomUser.password)).thenReturn(true)
+        `when`(userService.createSession(randomUser.username)).thenReturn(sessionId)
+
+        mockMvc.perform(
+            post("/login")
+                .param("username", randomUser.username)
+                .param("password", randomUser.password)
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+            .andExpect(content().string(sessionId))
+    }
+
+    @Test
+    @DisplayName("세션 체크 API - 성공")
+    fun `세션 체크 API - 성공`() {
+        val sessionId = "validSessionId"
+        `when`(userService.checkSession(randomUser.username, sessionId)).thenReturn(true)
+
+        mockMvc.perform(
+            get("/check")
+                .param("username", randomUser.username)
+                .param("sessionId", sessionId)
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+            .andExpect(content().string("Session valid"))
     }
 }
