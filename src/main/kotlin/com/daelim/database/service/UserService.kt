@@ -12,25 +12,32 @@ class UserService(
     private val userRepository: UserRepository,
     private val redisTemplate: StringRedisTemplate
 ) {
-    private val passwordEncoder = BCryptPasswordEncoder()
+    
 
     fun registerUser(username: String, password: String): UserEntity {
+        // 비밀번호 길이 검증
         if (password.length < 8) {
             throw IllegalArgumentException("비밀번호는 8자리 이상 되어야 해요.")
         }
 
+
+        // 중복 사용자 확인
         val existingUser = userRepository.findByUsername(username)
         if (existingUser != null) {
             throw IllegalStateException("Username already exists")
         }
 
-        // BCryptPasswordEncoder를 사용하여 비밀번호를 암호화합니다.
-        // registerUser 메서드 내에서 passwordEncoder.encode(password)를 호출하여 비밀번호를 암호화한 뒤, User 객체를 생성하고 저장합니다.
-        val encodedPassword = passwordEncoder.encode(password)
-        val user = UserEntity(username = username, password = encodedPassword)
+        /**
+         * 1. 상위 스코프에서 암호화 변수 선언 private val passwordEncoder = BCryptPasswordEncoder()
+         * 비밀번호 단방향 해시 함수를 사용하여 암호화해야 합니다.
+         * BCryptPasswordEncoder를 사용하여 다음과 같이 암호화할 수 있습니다.
+         * 2. val encodedPassword = BCryptPasswordEncoder().encode(password)
+         */
+        val user = UserEntity(username = username, password = password)
         return userRepository.save(user)
     }
 
+    
     fun validateUser(username: String, password: String): Boolean {
         val user = userRepository.findByUsername(username)
 
