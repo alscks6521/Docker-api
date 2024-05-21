@@ -44,9 +44,8 @@ class UserControllerSpec @Autowired constructor(
     fun `회원 가입 API - 성공`() {
         val user = randomUser
         `when`(userService.registerUser(randomUser.username, randomUser.password)).thenReturn(user)
-
         mockMvc.perform(
-            post("/register")
+            post("/users/register") // 엔드포인트 경로 수정
                 .param("username", user.username)
                 .param("password", user.password)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -60,9 +59,8 @@ class UserControllerSpec @Autowired constructor(
         val sessionId = "validSessionId"
         `when`(userService.validateUser(randomUser.username, randomUser.password)).thenReturn(true)
         `when`(userService.createSession(randomUser.username)).thenReturn(sessionId)
-
         mockMvc.perform(
-            post("/login")
+            post("/users/login") // 엔드포인트 경로 수정
                 .param("username", randomUser.username)
                 .param("password", randomUser.password)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -75,9 +73,8 @@ class UserControllerSpec @Autowired constructor(
     fun `세션 체크 API - 성공`() {
         val sessionId = "validSessionId"
         `when`(userService.checkSession(randomUser.username, sessionId)).thenReturn(true)
-
         mockMvc.perform(
-            get("/check")
+            get("/users/check") // 엔드포인트 경로 수정
                 .param("username", randomUser.username)
                 .param("sessionId", sessionId)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -2,20 +2,16 @@ package com.daelim.database.controller
 
 import com.daelim.database.core.dto.UserDto
 import com.daelim.database.service.UserService
-import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/users")
 class UserController(private val userService: UserService) {
-    @PostMapping("/register")
-    @Operation(summary = "회원 가입 API", description = "새로운 사용자를 등록합니다.")
+    @PostMapping("/users/register")
     fun register(
         @RequestParam username: String,
         @RequestParam password: String
@@ -30,8 +26,7 @@ class UserController(private val userService: UserService) {
         }
     }
 
-    @PostMapping("/login")
-    @Operation(summary = "로그인 API", description = "사용자 인증을 수행하고 세션을 생성합니다.")
+    @PostMapping("/users/login")
     fun login(
         @RequestParam username: String,
         @RequestParam password: String
@@ -44,8 +39,7 @@ class UserController(private val userService: UserService) {
         }
     }
 
-    @GetMapping("/check")
-    @Operation(summary = "세션 체크 API", description = "사용자의 세션 유효성을 확인합니다.")
+    @GetMapping("/users/check")
     fun check(
         @RequestParam username: String,
         @RequestParam sessionId: String
