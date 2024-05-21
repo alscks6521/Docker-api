@@ -16,20 +16,20 @@ class UserService(
         if (password.length < 8) {
             throw IllegalArgumentException("비밀번호는 8자리 이상 되어야 해요.")
         }
-        
+
         // 중복 사용자 확인
         val existingUser = userRepository.findByUsername(username)
         if (existingUser != null) {
             throw IllegalStateException("Username already exists")
         }
-        
+
         /**
          * 1. 상위 스코프에서 암호화 변수 선언 private val passwordEncoder = BCryptPasswordEncoder()
          * 비밀번호 단방향 해시 함수를 사용하여 암호화해야 합니다.
          * BCryptPasswordEncoder를 사용하여 다음과 같이 암호화할 수 있습니다.
          * 2. val encodedPassword = BCryptPasswordEncoder().encode(password)
          */
-        
+
         val user = UserEntity(username = username, password = password)
         return userRepository.save(user)
     }
