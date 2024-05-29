@@ -37,6 +37,7 @@ dependencies {
 
 	//
 	implementation("net.datafaker:datafaker:2.2.2")
+	implementation(kotlin("script-runtime"))
 }
 
 tasks.withType<KotlinCompile> {
