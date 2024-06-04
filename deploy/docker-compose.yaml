@@ -1,4 +1,7 @@
 # services : mysql, redis, app    /   volumes
+
+# version: '3.8' /버전 검토 필요
+
 services:
   mysql:
     build:
@@ -15,6 +18,8 @@ services:
       - "3307:3306"  # 호스트의 3307 포트와 컨테이너의 3306 포트를 연결
     volumes:
       - mysql_data:/var/lib/mysql  # mysql_data 볼륨을 MySQL 데이터 저장용으로 사용
+    networks:
+      - backend # backend 네트워크에 연결
 
   redis:
     image: redis:latest  # 최신 Redis 이미지 사용
@@ -24,6 +29,8 @@ services:
       - "6378:6379"  # 호스트의 6378 포트와 컨테이너의 6379 포트를 연결
     volumes:
       - redis_data:/data  # redis_data 볼륨을 Redis 데이터 저장용으로 사용
+    networks:
+      - backend # backend 네트워크에 연결
 
   app:
     build:
@@ -40,7 +47,13 @@ services:
       - SPRING_REDIS_HOST=redis  # Redis 서버 호스트명
     depends_on:
       - mysql  # app 서비스는 mysql 서비스가 먼저 실행된 후에 시작되어야 합니다.
+    networks:
+      - backend # backend 네트워크에 연결
 
 volumes:
   mysql_data:  # MySQL 데이터를 저장할 볼륨 정의
   redis_data:  # Redis 데이터를 저장할 볼륨 정의
+
+networks:
+  backend:
+    driver: bridge # 브리지 네트워크를 사용하여 서비스 간 통신을 관리
