@@ -51,8 +51,14 @@ services:
       - backend # backend 네트워크에 연결
 
 volumes:
-  mysql_data:  # MySQL 데이터를 저장할 볼륨 정의
-  redis_data:  # Redis 데이터를 저장할 볼륨 정의
+  mysql_data: # MySQL 데이터를 저장할 볼륨 정의
+    driver: local
+    #driver_opts: #옵션을 통해 특정 디렉토리에 데이터를 저장하는 옵션 설정, NFS, AWS EBS, GCE 등 다른 저장소도 설정 가능. 특정 디렉토리로 설정하려면 # - 주석을 제거하여 사용할 수 있습니다
+    #  type: none
+    #  o: bind
+    #  device: /path/to/host/directory # 위 디렉토리 주소에 mysql data가 저장됩니다
+  redis_data: # Redis 데이터를 저장할 볼륨 정의
+    driver: local 
 
 networks:
   backend:
