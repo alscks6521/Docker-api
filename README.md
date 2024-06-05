@@ -14,5 +14,6 @@
 
 ---
 ### Docker. docker-compose.yaml 업데이트 후 deploy > mysql file 작업
+#### 유진, 시온
 - docker-compose 업데이트된 develop 브랜치에서 Pull하여 작업 시작
-- TODO
+- mysql > Dockerfile / mysql > setup.sql
