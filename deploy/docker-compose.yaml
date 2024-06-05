@@ -9,8 +9,8 @@ services:
     restart: always  # 컨테이너가 중지되면 항상 자동으로 재시작합니다.
     container_name: mysql  # 컨테이너의 이름을 mysql로 설정합니다.
     environment:  # 환경 변수 설정
-      - MYSQL_ROOT_PASSWORD=1234  # MySQL root 사용자의 비밀번호 설정
-      - MYSQL_DATABASE=user  # 기본적으로 생성할 데이터베이스 이름
+      - MYSQL_ROOT_PASSWORD={MYSQL_ROOT_PASSWORD}  # MySQL root 사용자의 비밀번호 설정 (변수명으로만 대체)
+      - MYSQL_DATABASE=user  # MYSQL_DATABASE 기본적으로 생성할 데이터베이스 이름
     command:
       - --character-set-server=utf8mb4  # 문자 인코딩 설정
       - --collation-server=utf8mb4_unicode_ci  # 문자 정렬 설정
@@ -43,7 +43,7 @@ services:
     environment:  # 환경 변수 설정
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/user?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true  # Spring Boot 앱이 사용할 MySQL 접속 정보
       - SPRING_DATASOURCE_USERNAME=root  # 데이터베이스 사용자 이름
-      - SPRING_DATASOURCE_PASSWORD=1234  # 데이터베이스 비밀번호
+      - SPRING_DATASOURCE_PASSWORD={MYSQL_ROOT_PASSWORD}  # 데이터베이스 비밀번호 (변수명으로만 대체)
       - SPRING_REDIS_HOST=redis  # Redis 서버 호스트명
     depends_on:
       - mysql  # app 서비스는 mysql 서비스가 먼저 실행된 후에 시작되어야 합니다.
@@ -57,3 +57,4 @@ volumes:
 networks:
   backend:
     driver: bridge # 브리지 네트워크를 사용하여 서비스 간 통신을 관리
+
