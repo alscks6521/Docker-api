@@ -1,3 +1,7 @@
+## 공동작업브랜치
+## 민성: Jira CET-135 / 
+민성: https://daelim-univ.atlassian.net/browse/CET-135 
+
 ### Docker로 배포하기
 #### 예준
 - docker-compose.yaml 전반 작성
