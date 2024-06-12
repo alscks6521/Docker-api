@@ -1,6 +1,7 @@
 ### Docker로 배포하기
 #### 예준
-- docker-compose.yaml 전반 작성  
+- docker-compose.yaml 전반 작성
+- Jira : https://daelim-univ.atlassian.net/browse/CET-147
 
 #### 민성
 - 작성된 docker-compose.yaml 비밀번호 변수명으로 대체 및 수정
