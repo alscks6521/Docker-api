@@ -1,3 +1,5 @@
+## Jira https://daelim-univ.atlassian.net/browse/CET-137
+
 ### Docker. deploy > compose.yaml 작업
 #### 예준
 - docker-compose.yaml 전반 작성  
