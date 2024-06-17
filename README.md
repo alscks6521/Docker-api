@@ -1,3 +1,4 @@
+### jira https://daelim-univ.atlassian.net/browse/CET-28
 0612 - 알림
 - 기말 프로젝트 발표
 - 프로젝트에 사용한 스택
